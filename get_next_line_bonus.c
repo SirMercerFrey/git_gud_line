@@ -1,56 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:50:40 by #+#    #+#             */
-/*   Updated: 2025/05/21 13:50:40 by ###   ########.fr       */
+/*   Updated: 2025/05/23 14:56:23 by mcharret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
-	static t_fd_node	*head;
-	t_fd_node			*current;
-	char				*line;
+	static char		*stash[1024];
+	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	current = get_current_node(&head, fd);
-	if (!current)
+	stash[fd] = read_to_stash(fd, stash[fd]);
+	if (!stash[fd])
 		return (NULL);
-	current->stash = read_to_stash(fd, current->stash);
-	if (!current->stash)
-	{
-		return (NULL);
-	}
-	line = extract_line(current->stash);
-	current->stash = trim_stash(current->stash);
+	line = extract_line(stash[fd]);
+	stash[fd] = trim_stash(stash[fd]);
 	return (line);
-}
-
-t_fd_node	*get_current_node(t_fd_node **head, int fd)
-{
-	t_fd_node	*temp;
-
-	temp = *head;
-	while (temp)
-	{
-		if (temp->fd == fd)
-			return (temp);
-		temp = temp->next;
-	}
-	temp = (t_fd_node *)malloc(sizeof(t_fd_node));
-	if (!temp)
-		return (NULL);
-	temp->fd = fd;
-	temp->stash = NULL;
-	temp->next = *head;
-	*head = temp;
-	return (temp);
 }
 
 char	*read_to_stash(int fd, char *stash)
@@ -109,44 +82,3 @@ char	*trim_stash(char *stash)
 	free(stash);
 	return (new_stash);
 }
-
-/*void	remove_node(t_fd_node **head, int fd)
-{
-	t_fd_node	*temp;
-	t_fd_node	*prev;
-
-	temp = *head;
-	prev = NULL;
-	while (temp)
-	{
-		if (temp->fd == fd)
-		{
-			if (prev)
-				prev->next = temp->next;
-			else
-				*head = temp->next;
-			free(temp->stash);
-			free(temp);
-			return ;
-		}
-		prev = temp;
-		temp = temp->next;
-	}
-}*/
-
-/*int	main(void)
-{
-	int		fd;
-	char	*line;
-
-	fd = open("test.txt", O_RDONLY);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		printf("%s", line);
-		free(line);
-	}
-	return (0);
-}*/

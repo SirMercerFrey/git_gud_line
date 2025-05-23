@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By:  <>                                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:59:55 by #+#    #+#             */
-/*   Updated: 2025/05/21 13:59:55 by ###   ########.fr       */
+/*   Updated: 2025/05/23 15:38:12 by mcharret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,11 @@
 # include <fcntl.h> // REMOVE BEFORE PUSHING
 # include <unistd.h>
 
-# ifndef BUFFER_SIZE 
-#  define BUFFER_SIZE 42
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
 # endif
 
-typedef struct s_fd_node
-{
-	int					fd;
-	char				*stash;
-	struct s_fd_node	*next;
-}	t_fd_node;
-
 char		*get_next_line(int fd);
-t_fd_node	*get_current_node(t_fd_node **head, int fd);
 char		*read_to_stash(int fd, char *stash);
 char		*extract_line(char *stash);
 char		*trim_stash(char *stash);
@@ -39,6 +31,5 @@ char		*ft_strchr(char *s, int c);
 char		*ft_strdup(char *s);
 char		*ft_strjoin(char *s1, char *s2);
 char		*ft_substr(char *s, unsigned int start, size_t len);
-void		remove_node(t_fd_node **head, int fd);
 
 #endif

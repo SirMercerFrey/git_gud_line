@@ -6,7 +6,7 @@
 /*   By:  <>                                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:59:55 by #+#    #+#             */
-/*   Updated: 2025/05/21 13:59:55 by ###   ########.fr       */
+/*   Updated: 2025/05/23 14:00:00 by mcharret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef GET_NEXT_LINE_H
@@ -17,8 +17,8 @@
 # include <fcntl.h> // REMOVE BEFORE PUSHING
 # include <unistd.h>
 
-# ifndef BUFFER_SIZE 
-#  define BUFFER_SIZE 42
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
 # endif
 
 char	*get_next_line(int fd);

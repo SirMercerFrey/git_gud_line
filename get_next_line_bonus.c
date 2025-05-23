@@ -6,7 +6,7 @@
 /*   By:  <>                                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:50:40 by #+#    #+#             */
-/*   Updated: 2025/05/23 14:56:23 by mcharret         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:31:25 by mcharret         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -70,6 +70,8 @@ char	*trim_stash(char *stash)
 	char	*new_stash;
 	size_t	i;
 
+	if (!stash)
+		return (NULL);
 	i = 0;
 	while (stash[i] && stash[i] != '\n')
 		++i;
